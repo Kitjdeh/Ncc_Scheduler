@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name=".view.main.setting.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.main.auth.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.main.handover.ZoomImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.main.MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.splash.SplashActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".base.BaseActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/routine"
+        android:enabled="true"
+        android:icon="@drawable/icon_routine"
+        android:title="routine" />
+    <item
+        android:id="@+id/handover"
+        android:enabled="true"
+        android:icon="@drawable/icon_handover"
+        android:title="인수인계" />
+</menu>

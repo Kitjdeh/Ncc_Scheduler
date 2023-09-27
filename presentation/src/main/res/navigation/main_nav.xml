@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/routineFragment">
+
+
+    <fragment
+        android:id="@+id/routineFragment"
+        android:name="com.ncc.presentation.view.main.routine.RoutineFragment"
+        android:label="fragment_routine"
+        tools:layout="@layout/fragment_routine">
+        <action
+            android:id="@+id/action_routineFragment_to_writeHandoverFragment"
+            app:destination="@id/writeHandoverFragment" />
+        <action
+            android:id="@+id/action_routineFragment_to_detailHandoverFragment"
+            app:destination="@id/detailHandoverFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/handoverFragment"
+        android:name="com.ncc.presentation.view.main.handover.HandoverFragment"
+        android:label="fragment_handover"
+        tools:layout="@layout/fragment_routine">
+    </fragment>
+    <fragment
+        android:id="@+id/writeHandoverFragment"
+        android:name="com.ncc.presentation.view.main.handover.WriteHandoverFragment"
+        android:label="WriteHandoverFragment" >
+        <action
+            android:id="@+id/action_writeHandoverFragment_to_routineFragment"
+            app:destination="@id/routineFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailHandoverFragment"
+        android:name="com.ncc.presentation.view.main.handover.DetailHandoverFragment"
+        android:label="DetailHandoverFragment" >
+        <action
+            android:id="@+id/action_detailHandoverFragment_to_routineFragment"
+            app:destination="@id/routineFragment" />
+    </fragment>
+</navigation>

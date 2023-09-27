@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_nav"
+    app:startDestination="@id/loginActivity">
+
+    <activity
+        android:id="@+id/splashActivity"
+        android:name="com.ncc.presentation.view.splash.SplashActivity"
+        android:label="SplashActivity" />
+
+
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.ncc.presentation.view.main.auth.LoginActivity"
+        android:label="LoginActivity">
+        <action
+            android:id="@+id/action_loginActivity_to_splashActivity"
+            app:destination="@id/splashActivity" />
+
+    </activity>
+
+</navigation>

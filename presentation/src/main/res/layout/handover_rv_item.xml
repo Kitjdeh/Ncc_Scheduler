@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.ncc.domain.model.DomainHandover" />
+
+        <variable
+            name="fragment"
+            type="com.ncc.presentation.view.main.handover.DetailHandoverFragment" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/handover_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rv_item_frame"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                set_time="@{data.time}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="시간"
+                android:textColor="@color/main_color"
+                android:textSize="10sp" />
+
+            <TextView
+                set_title="@{data.title}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="15dp"
+                android:gravity="center"
+                android:layout_weight="2"
+                android:text="업무내용"
+                android:textColor="@color/main_color"
+                android:textSize="15sp" />
+
+            <TextView
+                set_process="@{data.routine}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="부서"
+                android:textColor="@color/main_color"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

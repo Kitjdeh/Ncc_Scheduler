@@ -1,0 +1,100 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
+    id 'com.google.gms.google-services'
+}
+
+android {
+    namespace 'com.ncc.nccscheduler'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.ncc.nccscheduler"
+        minSdk 33
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
+dependencies {
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":presentation"))
+
+
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.2.1'
+    implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.7.1'
+    implementation 'com.google.firebase:firebase-auth-ktx:22.1.1'
+
+
+//    implementation 'com.google.firebase:firebase-database-ktx:20.1.0'
+//    implementation 'com.google.firebase:firebase-firestore-ktx:20.1.0'
+//    implementation 'com.google.firebase:firebase-storage-ktx:20.1.0'
+//    implementation 'com.google.firebase:firebase-storage-ktx:24.0.0'
+//    implementation 'com.google.firebase:firebase-database:24.0.0'
+//    implementation 'com.google.firebase:firebase-database-ktx:24.0.0'
+//    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.0'
+
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+
+//    implementation(platform(Firebase.FIREBASE_BOM))
+//    implementation (Firebase.FIREBASE_STORAGE)
+////    implementation (Firebase.FIREBASE_DATABASE)
+//    implementation (Firebase.FIREBASE_DATABASE_KTX)
+//    implementation (Firebase.FIREBASE_FIRESTORE_KTX)
+//    implementation  (Firebase.FIREBASE_AUTH)
+
+
+    // dager hilt
+    implementation(DaggerHilt.DAGGER_HILT)
+    kapt(DaggerHilt.DAGGER_HILT_COMPILER)
+    kapt(DaggerHilt.DAGGER_HILT_ANDROIDX_COMPILER)
+
+    // Retrofit
+    implementation(Retrofit.RETROFIT)
+    implementation(Retrofit.CONVERTER_GSON)
+    implementation(Retrofit.CONVERTER_JAXB)
+
+    //okHttp
+    implementation(OkHttp.OKHTTP)
+    implementation(OkHttp.LOGGING_INTERCEPTOR)
+
+    //datastore
+    implementation(AndroidX.DATASTORE)
+
+
+    //Material Calendar View
+    implementation(MaterialCalendar.MATERIAL_CALENDAR_VIEW)
+}

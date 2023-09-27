@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "156375549187",
+    "firebase_url": "https://nccscheduler-default-rtdb.firebaseio.com",
+    "project_id": "nccscheduler",
+    "storage_bucket": "nccscheduler.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156375549187:android:e2c94e32bea74c74215536",
+        "android_client_info": {
+          "package_name": "com.ncc.presentation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156375549187-vbkq9nc7gag1ug1g12nl6a0ve95k1cba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIASW_7z8xvoDMDxVXAADTwabHojBNyxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156375549187-vbkq9nc7gag1ug1g12nl6a0ve95k1cba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
