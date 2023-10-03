@@ -1,6 +1,7 @@
 package com.ncc.presentation.view.main
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
@@ -52,6 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         mainViewModel.getUserInfo(useruid)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun observeViewModel() {
         mainViewModel.getUserInfoEvent.observe(this) { user ->
             val userName = user.name

@@ -130,7 +130,9 @@ class MainViewModel @Inject constructor(
                 selectedPosition = data!!.position
                 id = data!!.id
                 userUid = data!!.uid
-//                _getUserInfoEvent.value = data!!
+
+//                _getUserInfoEvent.value = data
+//                _getUserInfoEvent.call()
                 _getUserInfoEvent.postValue(data!!)
             }
         }
@@ -250,7 +252,7 @@ class MainViewModel @Inject constructor(
         ImageSrc: List<String>?,
         date: String,
         time: String,
-        position:String
+        position: String
     ) {
         setCommentUsecase.execute(
             DomainComment(name, handoverid, id, content, ImageSrc, date, time), position
