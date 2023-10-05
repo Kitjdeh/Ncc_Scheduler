@@ -19,7 +19,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         getdata()
         startCalendar()
         observeViewModel()
-//        schedule()
+        schedule()
     }
 
     private fun startCalendar() {
@@ -63,11 +63,11 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         binding.calendar.addDecorator(decoratorM)
         val decoratorN = DecoratorN(requireContext(), index)
         binding.calendar.addDecorator(decoratorN)
-        val decoratorOff = DecoratorOff(requireContext(), index)
-        binding.calendar.addDecorator(decoratorOff)
+//
         val decoratorE = DecoratorE(requireContext(), index)
         binding.calendar.addDecorator(decoratorE)
-
+        val decoratorOff = DecoratorOff(requireContext(), index)
+        binding.calendar.addDecorator(decoratorOff)
 //        binding.calendar.tileHeight = -2
         binding.calendar.tileWidth = -3
         binding.calendar.setDateTextAppearance(R.style.CustomDateTextAppearance)

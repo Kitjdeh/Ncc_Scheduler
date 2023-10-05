@@ -1,7 +1,6 @@
 package com.ncc.data.repository.remote.datasource
 
 import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.ncc.data.remote.model.DataComment
@@ -12,7 +11,10 @@ import com.ncc.data.remote.model.DataUser
 interface MainDataSource {
 
     //해당 날짜의 routine 가져오기
-    fun getRoutine(date: String): Task<QuerySnapshot>
+    suspend fun getRoutine(date: String): List<DataRoutine>
+
+//    이전꺼
+//    fun getRoutine(date: String): Task<QuerySnapshot>
 
     //해당 날짜 routine 등록
     fun setRoutine(data: DataRoutine): Task<Void>

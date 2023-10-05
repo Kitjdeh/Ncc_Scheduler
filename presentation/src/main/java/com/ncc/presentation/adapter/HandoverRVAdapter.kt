@@ -36,8 +36,9 @@ class HandoverRVAdapter(
 
     inner class HandoverRVHolder(val binding: HandoverRvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-//        val recyclerViewCommentImage : RecyclerView = binding.
+        //        val recyclerViewCommentImage : RecyclerView = binding.
         fun bind(data: DomainHandover) {
+            Log.d("어댑터확인", data.toString())
             binding.data = data
             binding.executePendingBindings()
             itemView.setOnClickListener {

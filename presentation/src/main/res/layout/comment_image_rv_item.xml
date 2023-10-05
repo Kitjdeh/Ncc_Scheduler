@@ -14,8 +14,15 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
-            android:background="@drawable/main_team_btn_frame"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_photo" />
+
+            android:scaleType="fitXY" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/commentImageArea"-->
+        <!--            android:layout_width="50dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:layout_marginHorizontal="10dp"-->
+        <!--            android:background="@drawable/main_team_btn_frame"-->
+        <!--            android:scaleType="fitXY"-->
+        <!--            android:src="@drawable/icon_photo" />-->
     </LinearLayout>
 </layout>

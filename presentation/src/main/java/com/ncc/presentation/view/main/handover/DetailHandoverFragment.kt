@@ -173,47 +173,12 @@ class DetailHandoverFragment(data: DomainHandover) :
                     data.date,
                     nowTime(), data.position,
                 )
-//                mainViewModel.getHandover(data.date)
             }
         }
-//        builder.setPositiveButton("댓글 등록", listener)
+
         builder.setNegativeButton("닫기", null)
         builder.show()
     }
-
-//    private var registerForCommentActivityResult =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            when (result.resultCode) {
-//                AppCompatActivity.RESULT_OK -> {
-//                    val clipData = result.data?.clipData
-//                    if (clipData != null) { // 이미지를 여러 개 선택할 경우
-//                        val clipDataSize = clipData.itemCount
-//                        val selectableCount = maxNumber - mainViewModel.commentImageList.count()
-//                        if (clipDataSize > selectableCount) { // 최대 선택 가능한 개수를 초과해서 선택한 경우
-//                            shortShowToast(
-//                                "이미지는 최대 ${selectableCount}장까지 첨부할 수 있습니다.",
-//                            )
-//                        } else {
-//                            // 선택 가능한 경우 ArrayList에 가져온 uri를 넣어준다.
-//                            for (i in 0 until clipDataSize) {
-//                                mainViewModel.commentImageList.add(clipData.getItemAt(i).uri.toString())
-//                            }
-//                        }
-//                    } else { // 이미지를 한 개만 선택할 경우 null이 올 수 있다.
-//                        val uri = result?.data?.data
-//                        if (uri != null) {
-//                            mainViewModel.commentImageList.add(uri.toString())
-//                        }
-//                    }
-//
-//                    commentImageCount()
-////                    Log.d("NCCimageclick", mainViewModel.commentImageList.toString())
-////                    imageAdatper.notifyDataSetChanged()
-//                    // notifyDataSetChanged()를 호출하여 adapter에게 값이 변경 되었음을 알려준다.
-////                    printCount()
-//                }
-//            }
-//        }
 
     private fun commentImageCount() {
         val text = "${mainViewModel.commentImageList.count()}/${maxNumber}"

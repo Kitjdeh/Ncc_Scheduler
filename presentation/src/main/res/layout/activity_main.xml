@@ -15,12 +15,12 @@
         android:layout_height="match_parent"
         tools:context=".view.main.MainActivity">
 
-        <TextView
-            android:id="@+id/user_info"
+        <fragment
+            android:id="@+id/mainFragment"
+            android:name="com.ncc.presentation.view.main.MainFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:text="장현수 - B조"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

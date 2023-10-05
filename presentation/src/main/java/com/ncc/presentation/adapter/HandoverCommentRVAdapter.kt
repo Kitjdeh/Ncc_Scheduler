@@ -20,9 +20,8 @@ class HandoverCommentRVAdapter(
 
         fun bind(data: DomainComment) {
             binding.data = data
-            binding.executePendingBindings()
+
             binding.commentImageRv.apply {
-                Log.d("NCCComment", viewModel.commentImageList.toString())
                 adapter = ImageCommentRVAdapter(
                     viewModel.commentList[position].ImageSrc,
                     itemView.context
@@ -32,14 +31,14 @@ class HandoverCommentRVAdapter(
                     LinearLayoutManager.HORIZONTAL,
                     false
                 )
-                setHasFixedSize(true)
+//                setHasFixedSize(true)
             }
-//            imageCommentAdapter =
-//                ImageCommentRVAdapter(viewModel.commentImageList, itemView.context)
+            binding.executePendingBindings()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HandoverCommentRVHolder {
+
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<CommentRvItemBinding>(
             layoutInflater, R.layout.comment_rv_item, parent, false

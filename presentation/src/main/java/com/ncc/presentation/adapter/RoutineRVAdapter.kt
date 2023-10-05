@@ -31,10 +31,12 @@ class RoutineRVAdapter(
     }
 
     override fun getItemCount(): Int {
-        return viewModel.routineList.size
+//        return viewModel.routineList.size
+        return viewModel.getRoutineEvent.value!!.size
     }
 
     override fun onBindViewHolder(holder: RoutineRVHolder, position: Int) {
-        holder.bind(viewModel.routineList[position])
+//        holder.bind(viewModel.routineList[position])
+        holder.bind(viewModel.getRoutineEvent.value!![position])
     }
 }

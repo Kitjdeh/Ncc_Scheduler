@@ -1,6 +1,7 @@
 package com.ncc.presentation.view.main.routine
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,21 +27,23 @@ class RoutineFragment :
 
     override fun init() {
         binding.fragment = this
-//        initRecyclerView()
         observeViewModel()
+        binding.selectedDate.text = mainViewModel.selectedDate
     }
 
     private fun observeViewModel() {
         mainViewModel.getRoutineEvent.observe(this) {
             initRecyclerView()
-            binding.selectedDate.text =formatDate(mainViewModel.selectedDate)
+            binding.selectedDate.text = formatDate(mainViewModel.selectedDate)
         }
     }
 
     private fun initRecyclerView() {
+        Log.d("리싸이클러뷰에 적용", mainViewModel.getRoutineEvent.value.toString())
         binding.routineRv.adapter = RoutineRVAdapter(mainViewModel)
         binding.routineRv.showVertical(requireContext())
     }
+
     fun formatDate(inputDate: String): String {
         val formatter = DateTimeFormatter.ofPattern("YYYY년 MM월 dd일")
         val date = LocalDate.parse(inputDate, DateTimeFormatter.BASIC_ISO_DATE)

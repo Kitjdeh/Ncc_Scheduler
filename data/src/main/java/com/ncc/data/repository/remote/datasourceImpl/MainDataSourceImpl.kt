@@ -18,12 +18,15 @@ import com.ncc.data.remote.model.DataHandover
 import com.ncc.data.remote.model.DataRoutine
 import com.ncc.data.remote.model.DataUser
 import com.ncc.data.repository.remote.datasource.MainDataSource
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.tasks.await
+import com.ncc.data.widget.extension.toRoutine
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 import kotlin.math.log
 
 class MainDataSourceImpl @Inject constructor(
@@ -32,29 +35,80 @@ class MainDataSourceImpl @Inject constructor(
     private val auth: FirebaseAuth
 ) : MainDataSource {
 
-    override fun getRoutine(date: String): Task<QuerySnapshot> {
-        val routineCollectionRef =
-            firestore.collection("routine").document(date)
-                .collection("routine")
-        return routineCollectionRef.orderBy("team", Query.Direction.ASCENDING).get()
-    }
+    val routineList = arrayListOf<DataRoutine>()
 
+
+    //    override suspend fun getRoutine(date: String): List<DataRoutine> {
+//        routineList.clear()
+//        val scope = CoroutineScope(Dispatchers.IO)
+//
+//        val result = scope.async {
+//            firestore.collection("routine").document(date).collection("routine")
+//        }
+//
+//        val routineCollectionRef = result.await()
+//        return routineCollectionRef.orderBy("team", Query.Direction.ASCENDING).get()
+//            .addOnSuccessListener { snapshot ->
+//                val result = snapshot.toRoutine()
+//                Log.d("쓰레드이름${Thread.currentThread().name}", result.toString())
+//                routineList.addAll(result)
+//            }.addOnFailureListener {
+//                null
+//            }
+//    }
+    override suspend fun getRoutine(date: String) =
+        suspendCoroutine<List<DataRoutine>> { continuation ->
+            val routineCollectionRef =
+                firestore.collection("routine").document(date).collection("routine")
+                    .orderBy("team", Query.Direction.ASCENDING).get()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            continuation.resume(it.result.toObjects(DataRoutine::class.java))
+                        } else {
+//                            continuation.resume(routineList)
+                        }
+                    }
+        }
+//    override suspend fun getRoutine(date: String): List<DataRoutine> {
+//        routineList.clear()
+//        val routineCollectionRef =
+//            firestore.collection("routine").document(date)
+//                .collection("routine")
+//       return routineCollectionRef.orderBy("team", Query.Direction.ASCENDING).get()
+//            .addOnSuccessListener { snapshot ->
+//                val result = snapshot.toRoutine()
+//                result
+////                Log.d("쓰레드이름${Thread.currentThread().name}", result.toString())
+////                routineList.addAll(result)
+////                routineList
+//            }.addOnFailureListener {
+//                null
+//            }
+////        return routineList
+//    }
+
+    //    override fun getRoutine(date: String): Task<QuerySnapshot> {
+//        val routineCollectionRef =
+//            firestore.collection("routine").document(date)
+//                .collection("routine")
+//        return routineCollectionRef.orderBy("team", Query.Direction.ASCENDING).get()
+//    }
     override fun getHandover(date: String, team: String): Task<QuerySnapshot> {
         val routineCollectionRef =
             firestore.collection("handover").document(date)
                 .collection(team)
 
         return routineCollectionRef.orderBy("time", Query.Direction.ASCENDING).get()
-            .addOnSuccessListener { querySnapshot ->
-                if (querySnapshot.isEmpty) {
-                }
-            }
+//            .addOnSuccessListener { querySnapshot ->
+//                if (querySnapshot.isEmpty) {
+//                }
+//            }
     }
 
     override fun getUserInfo(uid: String): Task<DocumentSnapshot> {
-        Log.d("유저정보 호출 시작", uid)
+
         val userInfoCollectionRef = firestore.collection("userInfo").document(uid)
-        Log.d("NCC유저정보", userInfoCollectionRef.get().toString())
+
         return userInfoCollectionRef.get()
     }
 

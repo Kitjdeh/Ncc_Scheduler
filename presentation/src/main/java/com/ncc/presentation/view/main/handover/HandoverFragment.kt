@@ -51,6 +51,7 @@ class HandoverFragment :
                 clickWriteBtn()
             }
         }
+
         binding.handoverRv.setOnClickListener { }
         imageAdatper = ImageHandoverRVAdapter(mainViewModel, requireContext())
     }
@@ -146,17 +147,15 @@ class HandoverFragment :
     }
 
     private fun observeViewModel() {
-//        binding.userPosition.text = mainViewModel.position
+
         mainViewModel.selectedDateEvent.observe(this) {
+            Log.d("인ㅇ수인계 event 작동", this.nowTime())
             initRecyclerView()
         }
         mainViewModel.getHandovereEvent.observe(this) {
+            Log.d("인ㅇ수인계 event 작동", this.nowTime())
             initRecyclerView()
         }
-//        mainViewModel.getUserInfoEvent.observe(this, Observer { user ->
-////            Log.d("유저정보position적용", user.toString())
-//            binding.userPosition.text = user.position
-//        })
     }
 
 
@@ -198,8 +197,8 @@ class HandoverFragment :
     }
 
     private fun initRecyclerView() {
+        Log.d("인수인계initRecyclerView작동 ","")
         var handoverAdapter = HandoverRVAdapter(mainViewModel, requireActivity())
-
         binding.handoverRv.adapter = handoverAdapter
         binding.handoverRv.showVertical(requireContext())
         handoverAdapter.setItemClickListener(object : HandoverRVAdapter.OnItemClickListener {

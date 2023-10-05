@@ -22,6 +22,18 @@ object MainMapper {
         )
     }
 
+    fun dataRoutineToDomainRoutine(
+        dataRoutine: DataRoutine
+    ):DomainRoutine{
+        return DomainRoutine(
+            name = dataRoutine.name,
+            id = dataRoutine.id,
+            title = dataRoutine.title,
+            team = dataRoutine.team,
+            date = dataRoutine.date
+        )
+    }
+
     fun domainCommentToDataComment(domainComment: DomainComment): DataComment {
         return DataComment(
             name = domainComment.name,

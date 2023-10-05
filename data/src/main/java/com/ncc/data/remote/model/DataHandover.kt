@@ -1,7 +1,6 @@
 package com.ncc.data.remote.model
 
-import android.media.Image
-import android.net.Uri
+
 
 data class DataHandover(
     var name: String,

@@ -74,7 +74,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
                 ScreenState.LOADING -> {
                     this.startActivityAndFinish(this, MainActivity::class.java)
                 }
-
                 ScreenState.ERROR -> shortShowToast("정보 갱신 실패")
                 else -> shortShowToast("원인을 알 수 없는 오류가 발생했습니다.")
             }
@@ -112,9 +111,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
 
 
             }.setPositiveButton("확인") { dialog, which ->
-//                position = positionList[which]
-//                binding.selectPositionBtn.text =
-//                    positionList[which]
                 mainViewModel.changePosition(position)
             }
             .show()

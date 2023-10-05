@@ -5,7 +5,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.ncc.data.mapper.MainMapper
-import com.ncc.data.remote.model.DataUser
+import com.ncc.data.remote.model.DataRoutine
 import com.ncc.data.repository.remote.datasource.MainDataSource
 import com.ncc.domain.model.DomainComment
 import com.ncc.domain.model.DomainHandover
@@ -20,12 +20,20 @@ class MainRepositoryImpl @Inject constructor(
 ) : MainRepository {
 
     //해당 날짜의 routine 가져오기
-    override fun getRoutine(date: String): Task<QuerySnapshot> {
-        val result = mainDataSource.getRoutine(date)
-
+    override suspend fun getRoutine(date: String): List<DomainRoutine> {
+        val data = mainDataSource.getRoutine(date)
+        val result = arrayListOf<DomainRoutine>()
+        for (item in data) {
+            result.add(MainMapper.dataRoutineToDomainRoutine(item))
+        }
         return result
     }
 
+    //    override fun getRoutine(date: String): Task<QuerySnapshot> {
+//        val result = mainDataSource.getRoutine(date)
+//
+//        return result
+//    }
     //해당 날짜 인수인계 가져오기
     override fun getHandover(date: String, team: String): Task<QuerySnapshot> {
         return mainDataSource.getHandover(date, team)
@@ -54,6 +62,4 @@ class MainRepositoryImpl @Inject constructor(
     override fun updateUserInfo(data: DomainUser): Task<Void> {
         return mainDataSource.updateUserInfo(MainMapper.userMapper(data))
     }
-
-
 }

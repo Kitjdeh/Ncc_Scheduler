@@ -174,7 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
-                    android:background="@drawable/main_login_btn_frame"
+                    android:background="@drawable/detail_handover_comment_frame"
                     android:maxHeight="100dp">
 
                     <androidx.recyclerview.widget.RecyclerView

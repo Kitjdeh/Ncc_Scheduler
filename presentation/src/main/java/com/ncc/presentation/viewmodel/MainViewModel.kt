@@ -55,8 +55,12 @@ class MainViewModel @Inject constructor(
 
 ) : ViewModel(), RemoteErrorEmitter {
 
+    private var _getRoutineEvent = MutableLiveData<List<DomainRoutine>>()
     val getRoutineEvent: LiveData<List<DomainRoutine>> get() = _getRoutineEvent
-    private var _getRoutineEvent = SingleLiveEvent<List<DomainRoutine>>()
+
+
+//    val getRoutineEvent: LiveData<List<DomainRoutine>> get() = _getRoutineEvent
+//    private var _getRoutineEvent = SingleLiveEvent<List<DomainRoutine>>()
 
     val getHandovereEvent: LiveData<List<DomainHandover>> get() = _getHandovereEvent
     private var _getHandovereEvent = SingleLiveEvent<List<DomainHandover>>()
@@ -79,7 +83,11 @@ class MainViewModel @Inject constructor(
     var userUid = ""
 
     lateinit var registerForCommentActivityResult: ActivityResultLauncher<Intent>
+
+
     val routineList = arrayListOf<DomainRoutine>()
+
+
     val handoverList = arrayListOf<DomainHandover>()
     val commentList = arrayListOf<DomainComment>()
 
@@ -119,19 +127,20 @@ class MainViewModel @Inject constructor(
         team = nowteam
     }
 
+
     fun getUserInfo(uid: String) {
         getUserInfoUsecase.execute(uid).addOnSuccessListener { DocumentSnapshot ->
             if (DocumentSnapshot.exists()) {
                 val data = DocumentSnapshot.toObject(DomainUser::class.java)
-                Log.d("겟유저인포 작동", data.toString())
+
                 team = data!!.team
                 user = data!!.name
                 position = data!!.position
                 selectedPosition = data!!.position
                 id = data!!.id
                 userUid = data!!.uid
-
-//                _getUserInfoEvent.value = data
+//                _getUserInfoEvent.value = data!!
+                Log.d("겟유저인포 작동", _getUserInfoEvent.value.toString())
 //                _getUserInfoEvent.call()
                 _getUserInfoEvent.postValue(data!!)
             }
@@ -172,14 +181,15 @@ class MainViewModel @Inject constructor(
                                 handoverList.add(it)
                             }
                         }
-//                        Log.d("전체 요청 생성3", "${handoverList.toString()} ${team}")
+                        Log.d("전체 요청 생성3", "${handoverList.toString()} ${team}")
                     } catch (e: Exception) {
                         // 에러 처리
                     }
                 }
                 withContext(Dispatchers.Main) {
                     // LiveData 값을 업데이트
-                    _getHandovereEvent.call()
+                    _getHandovereEvent.postValue(handoverList)
+                    Log.d("핸드오버 요정_getHandovereEvent", getHandovereEvent.value.toString())
                 }
             }
 
@@ -213,17 +223,49 @@ class MainViewModel @Inject constructor(
     }
 
     fun getRoutine(date: String) {
-//       selectedDate = formatDate(date).toString()
-        getRoutineUsecase.execute(date).addOnSuccessListener { snapshot ->
-            routineList.clear()
-            for (item in snapshot.documents) {
-                item.toObject(DomainRoutine::class.java).let {
-                    routineList.add(it!!)
-                }
-            }
-            _getRoutineEvent.call()
+        viewModelScope.launch() {
+            val result = getRoutineUsecase.execute(date)
+            Log.d("뷰모델 데이터 적용", Thread.currentThread().name)
+            _getRoutineEvent.setValue(result)
         }
     }
+//    fun getRoutine(date: String) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val result = getRoutineUsecase.execute(date)
+//            withContext(Dispatchers.Main) {
+//                Log.d("데이터 적용", Thread.currentThread().name)
+//                _getRoutineEvent.setValue(result)
+//            }
+//        }
+//    }
+//    fun getRoutine(date: String) {
+//
+//        routineList.clear()
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val result = getRoutineUsecase.execute(date)
+//            Log.d("쓰레드 ", Thread.currentThread().name)
+//            withContext(Dispatchers.Main) {
+//                _getRoutineEvent.postValue(result)
+//                routineList.addAll(result)
+//            }
+//        }
+//        Log.d("데이터 적용", Thread.currentThread().name)
+//    }
+//    fun getRoutine(date: String) {
+//        routineList.clear()
+//        getRoutineUsecase.execute(date)
+//            .addOnSuccessListener { snapshot ->
+//
+//                for (item in snapshot.documents) {
+//                    item.toObject(DomainRoutine::class.java).let {
+//                        it!!.filtering()
+//                        routineList.add(it!!)
+//                    }
+//                }
+//                _getRoutineEvent.call()
+//            }
+//    }
+
 
     fun setHandover(
         name: String,

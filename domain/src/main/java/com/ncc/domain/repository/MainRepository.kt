@@ -12,8 +12,9 @@ import com.ncc.domain.model.DomainUser
 interface MainRepository {
 
     //해당 날짜의 routine 가져오기
-    fun getRoutine(date: String): Task<QuerySnapshot>
+    suspend fun getRoutine(date: String): List<DomainRoutine>
 
+//    fun getRoutine(date: String): Task<QuerySnapshot>
     //해당 날짜 routine 등록
     fun setRoutine(data: DomainRoutine): Task<Void>
 
@@ -30,4 +31,5 @@ interface MainRepository {
     fun getUserInfo(uid: String): Task<DocumentSnapshot>
 
     fun updateUserInfo(data: DomainUser): Task<Void>
+
 }

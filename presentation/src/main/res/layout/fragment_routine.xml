@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="fragment"
             type="com.ncc.presentation.view.main.routine.RoutineFragment" />
@@ -19,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="2023년 8월 25일"
+            android:text=""
 
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/routine_rv"
