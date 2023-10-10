@@ -2,24 +2,21 @@ package com.ncc.presentation.view.main.handover
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import com.ncc.presentation.R
+import com.ncc.presentation.adapter.handover.ImageHandoverRVAdapter
 import com.ncc.presentation.base.BaseDialog
-import com.ncc.presentation.databinding.FragmentDetailHandoverBinding
 import com.ncc.presentation.databinding.FragmentSelectImageBinding
 
 
 class SelectImageFragment :
     BaseDialog<FragmentSelectImageBinding>(R.layout.fragment_select_image) {
     private val mainViewModel by activityViewModels<com.ncc.presentation.viewmodel.MainViewModel>()
-    private lateinit var imageAdatper: com.ncc.presentation.adapter.ImageHandoverRVAdapter
+    private lateinit var imageAdatper: ImageHandoverRVAdapter
     private val maxNumber = 5
     private lateinit var registerForCommentActivityResult: ActivityResultLauncher<Intent>
     override fun init() {

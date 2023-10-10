@@ -2,7 +2,6 @@ package com.ncc.domain.repository
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
-//import com.google.firebase.database.DataSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.ncc.domain.model.DomainComment
 import com.ncc.domain.model.DomainHandover
@@ -11,8 +10,8 @@ import com.ncc.domain.model.DomainUser
 
 interface MainRepository {
 
-    //해당 날짜의 routine 가져오기
-    suspend fun getRoutine(date: String): List<DomainRoutine>
+    //해당 날짜의 routine FireStore에서 호출
+    suspend fun getRoutine(): List<DomainRoutine>
 
 //    fun getRoutine(date: String): Task<QuerySnapshot>
     //해당 날짜 routine 등록

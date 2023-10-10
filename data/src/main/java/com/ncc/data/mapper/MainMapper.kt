@@ -18,19 +18,29 @@ object MainMapper {
             id = domainRoutine.id,
             title = domainRoutine.title,
             team = domainRoutine.team,
-            date = domainRoutine.date
+            date = domainRoutine.date,
+            type = domainRoutine.type,
+            month = domainRoutine.month,
+            week = domainRoutine.week,
+            dayOfMonth = domainRoutine.dayOfMonth,
+            dayOfWeek = domainRoutine.dayOfWeek
         )
     }
 
     fun dataRoutineToDomainRoutine(
         dataRoutine: DataRoutine
-    ):DomainRoutine{
+    ): DomainRoutine {
         return DomainRoutine(
             name = dataRoutine.name,
             id = dataRoutine.id,
             title = dataRoutine.title,
             team = dataRoutine.team,
-            date = dataRoutine.date
+            date = dataRoutine.date,
+            type = dataRoutine.type,
+            month = dataRoutine.month,
+            week = dataRoutine.week,
+            dayOfMonth = dataRoutine.dayOfMonth,
+            dayOfWeek = dataRoutine.dayOfWeek
         )
     }
 

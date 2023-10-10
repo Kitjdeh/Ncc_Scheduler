@@ -115,6 +115,18 @@
                 android:text="설정완료"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/go_adminBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/main_team_btn_frame"
+                android:padding="10dp"
+                android:text="관리자"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
         </LinearLayout>
 
     </LinearLayout>

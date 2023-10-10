@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text=""
-
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/routine_rv"
             app:layout_constraintEnd_toEndOf="parent"

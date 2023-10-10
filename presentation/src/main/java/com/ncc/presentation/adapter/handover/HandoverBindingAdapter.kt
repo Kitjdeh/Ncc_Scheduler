@@ -1,4 +1,4 @@
-package com.ncc.presentation.adapter
+package com.ncc.presentation.adapter.handover
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter

@@ -1,4 +1,4 @@
-package com.ncc.presentation.adapter
+package com.ncc.presentation.adapter.handover
 
 
 import android.util.Log
@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ncc.domain.model.DomainHandover
 import com.ncc.presentation.R
 import com.ncc.presentation.databinding.HandoverRvItemBinding
-import com.ncc.presentation.view.main.handover.HandoverFragment
 import com.ncc.presentation.viewmodel.MainViewModel
 
 class HandoverRVAdapter(

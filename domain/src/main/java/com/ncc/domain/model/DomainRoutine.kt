@@ -5,18 +5,26 @@ import java.time.Month
 
 data class DomainRoutine(
     val name: String,
-    val id: Int,
+    val id: String,
     val title: String,
     val team: String,
     val date: String,
-//    val month: Month,
-//    val week: DayOfWeek,
-//    val dayOfWeek: DayOfWeek
-) {
-    fun filtering (){
-
-        //여기서 필터링 작업
-    }
-    constructor() : this("오류", 0, "오류", "0", "오류",)
+    val type: String,
+    val month: List<String>?,
+    val week: List<String>?,
+    val dayOfMonth: List<String>?,
+    val dayOfWeek: List<String>?,
+    ) {
+    constructor() : this(
+        "오류",
+        "",
+        "오류",
+        "0",
+        "오류",
+        "오류",
+        emptyList(),
+        emptyList(),
+        emptyList(),
+        emptyList()
+    )
 }
-

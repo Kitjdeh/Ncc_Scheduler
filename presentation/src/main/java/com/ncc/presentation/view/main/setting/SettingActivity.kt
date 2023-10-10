@@ -12,6 +12,7 @@ import com.ncc.presentation.R
 import com.ncc.presentation.base.BaseActivity
 import com.ncc.presentation.databinding.ActivityMainBinding
 import com.ncc.presentation.databinding.ActivitySettingBinding
+import com.ncc.presentation.view.admin.AdminActivity
 import com.ncc.presentation.view.main.MainActivity
 import com.ncc.presentation.view.main.auth.LoginActivity
 import com.ncc.presentation.view.splash.SplashActivity
@@ -47,6 +48,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
             shortShowToast("로그아웃 되었습니다.")
             this.startActivityAndFinish(this, LoginActivity::class.java)
         }
+        binding.goAdminBtn.setOnClickListener {
+            this.startActivityAndFinish(this, AdminActivity::class.java)
+
+        }
     }
 
 
@@ -67,6 +72,12 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
         mainViewModel.getUserInfoEvent.observe(this) { user ->
             binding.selectTeamBtn.text = user.team
             binding.selectPositionBtn.text = user.position
+            Log.d("유저UID", mainViewModel.userUid)
+            if (mainViewModel.userUid == "EHGAPw6YdsdiV57wScCfkBkby6z1" || mainViewModel.userUid == "NXWWGuqiaPQS09iMvtyA8azxcJE2") {
+                binding.goAdminBtn.visibility = View.VISIBLE
+            } else {
+                binding.goAdminBtn.visibility = View.INVISIBLE
+            }
         }
 
         mainViewModel.updateCallEvent.observe(this) {
@@ -74,6 +85,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
                 ScreenState.LOADING -> {
                     this.startActivityAndFinish(this, MainActivity::class.java)
                 }
+
                 ScreenState.ERROR -> shortShowToast("정보 갱신 실패")
                 else -> shortShowToast("원인을 알 수 없는 오류가 발생했습니다.")
             }
@@ -84,15 +96,14 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
         val teamList = Organization.team.toTypedArray()
 
         var team = mainViewModel.team
+        var index = teamList.indexOf(team)
         var builder = AlertDialog.Builder(this)
             .setTitle("팀 선택")
-            .setSingleChoiceItems(teamList, 0) { dialog, which ->
+            .setSingleChoiceItems(teamList, index) { dialog, which ->
                 team = teamList[which]
+                binding.selectTeamBtn.text = team
             }
             .setPositiveButton("확인") { dialog, which ->
-//                mainViewModel.team = teamList[which]
-//                binding.selectTeamBtn.text =
-//                    teamList[which]
                 mainViewModel.changeTeam(team)
             }
 
@@ -101,15 +112,15 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
 
     private fun changePosition() {
         val positionList = Organization.position.toTypedArray()
+
         var position = mainViewModel.position
-        val index = mainViewModel.position.indexOf(position)
+        val positionIdx = positionList.indexOf(position)
+        Log.d("포지션${position}", "$positionIdx $positionList")
         var builder = AlertDialog.Builder(this)
             .setTitle("포지션 선택")
-            .setSingleChoiceItems(positionList, index) { dialog, which ->
-
+            .setSingleChoiceItems(positionList, positionIdx) { dialog, which ->
                 position = positionList[which]
-
-
+                binding.selectPositionBtn.text = position
             }.setPositiveButton("확인") { dialog, which ->
                 mainViewModel.changePosition(position)
             }

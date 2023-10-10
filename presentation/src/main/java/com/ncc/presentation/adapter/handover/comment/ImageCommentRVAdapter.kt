@@ -1,11 +1,10 @@
-package com.ncc.presentation.adapter
+package com.ncc.presentation.adapter.handover.comment
 
 import android.content.Context
 import android.content.DialogInterface
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,9 +12,6 @@ import com.bumptech.glide.Glide
 import com.github.chrisbanes.photoview.PhotoView
 import com.ncc.presentation.R
 import com.ncc.presentation.databinding.CommentImageRvItemBinding
-import com.ncc.presentation.databinding.CommentRvItemBinding
-import com.ncc.presentation.viewmodel.MainViewModel
-
 
 
 class ImageCommentRVAdapter(

@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.SpannedString
 import android.util.Log
 import com.ncc.presentation.R
+import com.ncc.presentation.widget.utils.Organization
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
@@ -16,7 +17,8 @@ class DecoratorN(context: Context, idx: Int) : DayViewDecorator {
     private val idx = idx
     @SuppressLint("UseCompatLoadingForDrawables")
     val drawable = context.getDrawable(R.drawable.n)
-    val startDate = LocalDate.of(2023, 9, 2)
+    //    val startDate = LocalDate.of(2023, 9, 2)
+    val startDate = Organization.startDate
     override fun shouldDecorate(day: CalendarDay?): Boolean {
 //        ChronoUnit
         if (day != null) {

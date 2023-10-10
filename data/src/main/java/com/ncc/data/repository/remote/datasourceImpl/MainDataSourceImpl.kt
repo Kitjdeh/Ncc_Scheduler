@@ -2,12 +2,9 @@ package com.ncc.data.repository.remote.datasourceImpl
 
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
@@ -18,16 +15,10 @@ import com.ncc.data.remote.model.DataHandover
 import com.ncc.data.remote.model.DataRoutine
 import com.ncc.data.remote.model.DataUser
 import com.ncc.data.repository.remote.datasource.MainDataSource
-import com.ncc.data.widget.extension.toRoutine
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-import kotlin.math.log
+
 
 class MainDataSourceImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
@@ -35,64 +26,40 @@ class MainDataSourceImpl @Inject constructor(
     private val auth: FirebaseAuth
 ) : MainDataSource {
 
-    val routineList = arrayListOf<DataRoutine>()
 
-
-    //    override suspend fun getRoutine(date: String): List<DataRoutine> {
-//        routineList.clear()
-//        val scope = CoroutineScope(Dispatchers.IO)
-//
-//        val result = scope.async {
-//            firestore.collection("routine").document(date).collection("routine")
-//        }
-//
-//        val routineCollectionRef = result.await()
-//        return routineCollectionRef.orderBy("team", Query.Direction.ASCENDING).get()
-//            .addOnSuccessListener { snapshot ->
-//                val result = snapshot.toRoutine()
-//                Log.d("쓰레드이름${Thread.currentThread().name}", result.toString())
-//                routineList.addAll(result)
-//            }.addOnFailureListener {
-//                null
-//            }
-//    }
-    override suspend fun getRoutine(date: String) =
+    private var routineList: List<DataRoutine>? = null
+    override suspend fun getRoutine() =
         suspendCoroutine<List<DataRoutine>> { continuation ->
-            val routineCollectionRef =
-                firestore.collection("routine").document(date).collection("routine")
-                    .orderBy("team", Query.Direction.ASCENDING).get()
-                    .addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            continuation.resume(it.result.toObjects(DataRoutine::class.java))
-                        } else {
-//                            continuation.resume(routineList)
+            if (routineList != null) {
+                Log.d("파베 요청 없음", routineList.toString())
+                continuation.resume(routineList!!)
+            } else {
+                val routineCollectionRef =
+                    firestore.collection("routine")
+                        .orderBy("team", Query.Direction.ASCENDING).get()
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                routineList = it.result.toObjects(DataRoutine::class.java)
+                                continuation.resume(routineList!!)
+                            } else {
+                            }
                         }
-                    }
+            }
         }
-//    override suspend fun getRoutine(date: String): List<DataRoutine> {
-//        routineList.clear()
-//        val routineCollectionRef =
-//            firestore.collection("routine").document(date)
-//                .collection("routine")
-//       return routineCollectionRef.orderBy("team", Query.Direction.ASCENDING).get()
-//            .addOnSuccessListener { snapshot ->
-//                val result = snapshot.toRoutine()
-//                result
-////                Log.d("쓰레드이름${Thread.currentThread().name}", result.toString())
-////                routineList.addAll(result)
-////                routineList
-//            }.addOnFailureListener {
-//                null
-//            }
-////        return routineList
-//    }
 
-    //    override fun getRoutine(date: String): Task<QuerySnapshot> {
-//        val routineCollectionRef =
-//            firestore.collection("routine").document(date)
-//                .collection("routine")
-//        return routineCollectionRef.orderBy("team", Query.Direction.ASCENDING).get()
-//    }
+    //    override suspend fun getRoutine(date: String) =
+//        suspendCoroutine<List<DataRoutine>> { continuation ->
+//            val routineCollectionRef =
+//                firestore.collection("routine").document(date).collection("routine")
+//                    .orderBy("team", Query.Direction.ASCENDING).get()
+//                    .addOnCompleteListener {
+//                        if (it.isSuccessful) {
+//                            continuation.resume(it.result.toObjects(DataRoutine::class.java))
+//                        } else {
+////                            continuation.resume(routineList)
+//                        }
+//                    }
+//        }
     override fun getHandover(date: String, team: String): Task<QuerySnapshot> {
         val routineCollectionRef =
             firestore.collection("handover").document(date)
@@ -124,22 +91,33 @@ class MainDataSourceImpl @Inject constructor(
 
 
     override fun setRoutine(data: DataRoutine): Task<Void> {
-        val routineDocRef = firestore.collection("routine").document(data.date)
-        val routineCollectionRef = routineDocRef.collection("routine")
 
-        return firestore.runTransaction { transaction ->
-            val routineDocSnapshot = transaction.get(routineDocRef)
-            if (!routineDocSnapshot.exists()) {
-                // 문서가 없는 경우: 새로운 문서와 하위 컬렉션을 생성하고 데이터 추가
-                transaction.set(routineDocRef, data)
-                routineCollectionRef.add(data)
-            } else {
-                // 문서가 있는 경우: 하위 컬렉션에 데이터 추가
-                routineCollectionRef.add(data)
+        val routineCollectionRef = firestore.collection("routine")
+        return firestore.collection("routine").document().set(data)
+            .addOnSuccessListener { documentReference ->
+
             }
-            null  // Transaction 결과 반환
-        }
+            .addOnFailureListener { e ->
+                // 문서 추가가 실패한 경우 실행되는 코드
+                Log.w("Firestore", "Error adding document", e)
+            }
+
     }
+//        val routineDocRef = firestore.collection("routine").document(data.date)
+//        val routineCollectionRef = routineDocRef.collection("routine")
+//
+//        return firestore.runTransaction { transaction ->
+//            val routineDocSnapshot = transaction.get(routineDocRef)
+//            if (!routineDocSnapshot.exists()) {
+//                // 문서가 없는 경우: 새로운 문서와 하위 컬렉션을 생성하고 데이터 추가
+//                transaction.set(routineDocRef, data)
+//                routineCollectionRef.add(data)
+//            } else {
+//                // 문서가 있는 경우: 하위 컬렉션에 데이터 추가
+//                routineCollectionRef.add(data)
+//            }
+//            null  // Transaction 결과 반환
+//        }
 
 
     override fun setHandover(data: DataHandover, team: String): Task<Void> {

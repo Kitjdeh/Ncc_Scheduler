@@ -15,14 +15,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.ncc.domain.model.DomainComment
 import com.ncc.domain.model.DomainHandover
 import com.ncc.presentation.R
-import com.ncc.presentation.adapter.HandoverCommentRVAdapter
-import com.ncc.presentation.adapter.HandoverRVAdapter
-import com.ncc.presentation.adapter.ImageHandoverRVAdapter
+import com.ncc.presentation.adapter.handover.comment.HandoverCommentRVAdapter
+import com.ncc.presentation.adapter.handover.HandoverRVAdapter
+import com.ncc.presentation.adapter.handover.ImageHandoverRVAdapter
 import com.ncc.presentation.base.BaseFragment
 import com.ncc.presentation.databinding.FragmentHandoverBinding
 import com.ncc.presentation.viewmodel.MainViewModel
@@ -197,7 +196,7 @@ class HandoverFragment :
     }
 
     private fun initRecyclerView() {
-        Log.d("인수인계initRecyclerView작동 ","")
+        Log.d("인수인계initRecyclerView작동 ", "")
         var handoverAdapter = HandoverRVAdapter(mainViewModel, requireActivity())
         binding.handoverRv.adapter = handoverAdapter
         binding.handoverRv.showVertical(requireContext())

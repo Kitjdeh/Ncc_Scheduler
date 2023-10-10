@@ -38,7 +38,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val handoverFragment = HandoverFragment()
 
     override fun init() {
-
+        mainViewModel.getRoutine()
         binding.main = this
         initNavition()
         Log.d("메인 시작,", mainViewModel.userUid)

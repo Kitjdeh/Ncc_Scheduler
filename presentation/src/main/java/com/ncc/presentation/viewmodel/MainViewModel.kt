@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.firestore.DocumentSnapshot
 import com.ncc.domain.model.DomainComment
 import com.ncc.domain.model.DomainHandover
 import com.ncc.domain.model.DomainRoutine
@@ -30,7 +29,6 @@ import com.ncc.presentation.widget.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
@@ -44,7 +42,6 @@ class MainViewModel @Inject constructor(
     private val getHandoverUseCase: GetHandoverUsecase,
     private val setHandoverUsecase: SetHandoverUsecase,
     private val getRoutineUsecase: GetRoutineUsecase,
-    private val setRoutineUsecase: SetRoutineUsecase,
     private val setCommentUsecase: SetCommentUsecase,
     private val getIdUsecase: GetIdUsecase,
     private val getUserInfoUsecase: GetUserInfoUsecase,
@@ -71,6 +68,9 @@ class MainViewModel @Inject constructor(
     val getUserInfoEvent: LiveData<DomainUser> get() = _getUserInfoEvent
     private var _getUserInfoEvent = SingleLiveEvent<DomainUser>()
 
+    val checkUserInfoEvent: LiveData<DomainUser> get() = _checkUserInfoEvent
+    private var _checkUserInfoEvent = SingleLiveEvent<DomainUser>()
+
     val getTeamChangeEvent: LiveData<String> get() = _getTeamChangeEvent
     private var _getTeamChangeEvent = SingleLiveEvent<String>()
 
@@ -86,7 +86,7 @@ class MainViewModel @Inject constructor(
 
 
     val routineList = arrayListOf<DomainRoutine>()
-
+    var userShift = ""
 
     val handoverList = arrayListOf<DomainHandover>()
     val commentList = arrayListOf<DomainComment>()
@@ -102,6 +102,31 @@ class MainViewModel @Inject constructor(
     var team = ""
     var position = ""
     var id = 0
+    fun changeDate(date: String) {
+        selectedDate = date
+    }
+
+    fun changeShift(shift: String) {
+        userShift = shift
+    }
+
+    fun getRoutine() {
+        viewModelScope.launch {
+            getRoutineUsecase.getRoutine()
+        }
+    }
+
+    fun filterRoutine(date: String, dayOfMonth: String) {
+        routineList.clear()
+        viewModelScope.launch {
+            var data = getRoutineUsecase.execute(userShift, date, dayOfMonth)
+            Log.d("루틴 데이터 확인", data.toString())
+            _getRoutineEvent.postValue(data)
+//            for (routine in data) {
+//                routineList.add(routine)
+//            }
+        }
+    }
 
     fun updateUserInfo() {
         val data = DomainUser(id, user, team, position, userUid)
@@ -139,10 +164,10 @@ class MainViewModel @Inject constructor(
                 selectedPosition = data!!.position
                 id = data!!.id
                 userUid = data!!.uid
-//                _getUserInfoEvent.value = data!!
                 Log.d("겟유저인포 작동", _getUserInfoEvent.value.toString())
-//                _getUserInfoEvent.call()
+
                 _getUserInfoEvent.postValue(data!!)
+                _checkUserInfoEvent.postValue(data!!)
             }
         }
     }
@@ -222,13 +247,12 @@ class MainViewModel @Inject constructor(
         return Date
     }
 
-    fun getRoutine(date: String) {
-        viewModelScope.launch() {
-            val result = getRoutineUsecase.execute(date)
-            Log.d("뷰모델 데이터 적용", Thread.currentThread().name)
-            _getRoutineEvent.setValue(result)
-        }
-    }
+//    fun getRoutine(date: String) {
+//        viewModelScope.launch() {
+////            val result = getRoutineUsecase.execute(date)
+////            _getRoutineEvent.setValue(result)
+//        }
+//    }
 //    fun getRoutine(date: String) {
 //        viewModelScope.launch(Dispatchers.IO) {
 //            val result = getRoutineUsecase.execute(date)

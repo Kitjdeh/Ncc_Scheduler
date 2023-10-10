@@ -35,6 +35,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
 
 //intent and finish
 fun AppCompatActivity.startActivityAndFinish(context: Context, activity: Class<*>) {
-    startActivity(Intent(context, activity).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+    startActivity(Intent(context, activity))
+//    startActivity(Intent(context, activity).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
     this.finish()
 }

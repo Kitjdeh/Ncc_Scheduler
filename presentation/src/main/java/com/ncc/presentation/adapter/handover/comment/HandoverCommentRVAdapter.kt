@@ -1,6 +1,5 @@
-package com.ncc.presentation.adapter
+package com.ncc.presentation.adapter.handover.comment
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil

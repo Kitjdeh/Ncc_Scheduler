@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/admin_nav"
+    app:startDestination="@id/adminFragment">
+
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="com.ncc.presentation.view.admin.AdminFragment"
+        android:label="AdminFragment" >
+        <action
+            android:id="@+id/action_adminFragment_to_writeRoutineFragment"
+            app:destination="@id/writeRoutineFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeRoutineFragment"
+        android:name="com.ncc.presentation.view.admin.WriteRoutineFragment"
+        android:label="WriteRoutineFragment" >
+        <action
+            android:id="@+id/action_writeRoutineFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+    </fragment>
+</navigation>

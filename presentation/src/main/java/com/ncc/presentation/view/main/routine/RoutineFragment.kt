@@ -1,16 +1,9 @@
 package com.ncc.presentation.view.main.routine
 
-import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.ncc.presentation.R
-import com.ncc.presentation.adapter.RoutineRVAdapter
+import com.ncc.presentation.adapter.routine.RoutineRVAdapter
 import com.ncc.presentation.base.BaseFragment
-import com.ncc.presentation.databinding.FragmentDetailHandoverBinding
 import com.ncc.presentation.databinding.FragmentRoutineBinding
 import com.ncc.presentation.viewmodel.MainViewModel
 import com.ncc.presentation.widget.extension.showVertical
@@ -39,7 +32,6 @@ class RoutineFragment :
     }
 
     private fun initRecyclerView() {
-        Log.d("리싸이클러뷰에 적용", mainViewModel.getRoutineEvent.value.toString())
         binding.routineRv.adapter = RoutineRVAdapter(mainViewModel)
         binding.routineRv.showVertical(requireContext())
     }

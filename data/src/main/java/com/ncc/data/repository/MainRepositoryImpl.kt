@@ -20,8 +20,8 @@ class MainRepositoryImpl @Inject constructor(
 ) : MainRepository {
 
     //해당 날짜의 routine 가져오기
-    override suspend fun getRoutine(date: String): List<DomainRoutine> {
-        val data = mainDataSource.getRoutine(date)
+    override suspend fun getRoutine(): List<DomainRoutine> {
+        val data = mainDataSource.getRoutine()
         val result = arrayListOf<DomainRoutine>()
         for (item in data) {
             result.add(MainMapper.dataRoutineToDomainRoutine(item))
@@ -38,7 +38,6 @@ class MainRepositoryImpl @Inject constructor(
     override fun getHandover(date: String, team: String): Task<QuerySnapshot> {
         return mainDataSource.getHandover(date, team)
     }
-
 
     //해당 날짜 routine 등록
     override fun setRoutine(data: DomainRoutine): Task<Void> {

@@ -1,4 +1,4 @@
-package com.ncc.presentation.adapter
+package com.ncc.presentation.adapter.handover.comment
 
 import android.net.Uri
 import android.util.Log
