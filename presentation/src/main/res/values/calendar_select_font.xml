@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CustomDateTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
+    <style name="SelectedDateTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
         <item name="android:includeFontPadding">false</item>
         <item name="android:textAlignment">textStart</item>
         <item name="itemPaddingBottom">1dp</item>
         <item name="android:paddingBottom">10dp</item>
-        <item name="selectableItemBackground">@color/main_color</item>
-        <item name="android:textColor">@drawable/calendar_selected_text</item>
+        <item name="mcv_selectionColor">@color/main_color</item>
+        <item name="android:textColor">@color/main_color</item>
     </style>
-
-
 </resources>

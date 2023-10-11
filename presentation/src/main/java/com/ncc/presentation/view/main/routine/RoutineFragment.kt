@@ -21,7 +21,7 @@ class RoutineFragment :
     override fun init() {
         binding.fragment = this
         observeViewModel()
-        binding.selectedDate.text = mainViewModel.selectedDate
+        binding.selectedDate.text = formatDate(mainViewModel.selectedDate)
     }
 
     private fun observeViewModel() {

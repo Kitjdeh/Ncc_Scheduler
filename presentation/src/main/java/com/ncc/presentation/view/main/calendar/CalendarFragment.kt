@@ -23,6 +23,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         startCalendar()
         observeViewModel()
         schedule()
+        binding.calendar.selectionColor
     }
 
 
@@ -49,6 +50,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
             Log.d("달력observeViewmodel", user.toString())
             schedule()
         }
+        binding.calendar.setDateTextAppearance(15)
     }
 
     private fun getdata() {
@@ -56,6 +58,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
         binding.calendar.setOnDateChangedListener { widget, date, selected ->
             // 현재 날짜를 가져옵니다.
+
             checkshift(date)
             val calendar = Calendar.getInstance()
             val Ayear = date.year
@@ -74,7 +77,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
             val Date =
                 "${year}${month.toString().padStart(2, '0')}${day.toString().padStart(2, '0')}"
             mainViewModel.changeDate(Date)
-            mainViewModel.filterRoutine(Date, dayOfWeek)
+            mainViewModel.filterRoutine(Date, dayOfWeek, WEEK_OF_MONTH.toString())
             mainViewModel.getHandover(Date, mainViewModel.selectedPosition)
         }
     }

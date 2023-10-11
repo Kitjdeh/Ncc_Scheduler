@@ -20,6 +20,9 @@ class DecoratorOff(context: Context, idx: Int) : DayViewDecorator {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     val drawable = context.getDrawable(R.drawable.off)
+
+//    val selectDrawable = context.getDrawable(R.drawable.calendar_selected_text)
+
     //    val startDate = LocalDate.of(2023, 9, 2)
     val startDate = Organization.startDate
     override fun shouldDecorate(day: CalendarDay?): Boolean {
@@ -58,11 +61,13 @@ class DecoratorOff(context: Context, idx: Int) : DayViewDecorator {
     }
 
     override fun decorate(view: DayViewFacade?) {
+
         // 날짜에 따라 텍스트를 추가하거나 스타일을 변경할 수 있습니다.
         if (view != null) {
 
             if (drawable != null) {
                 view.setBackgroundDrawable(drawable)
+//                view.setSelectionDrawable(selectDrawable!!)
             }
 
         }

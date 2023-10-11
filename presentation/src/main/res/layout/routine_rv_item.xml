@@ -18,14 +18,13 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-
             android:id="@+id/routine_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/rv_item_frame"
             android:gravity="center"
-            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,11 +32,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                set_process="@{data.name}"
+                set_process="@{data.position.toString()}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="10dp"
+                android:layout_weight="2"
                 android:text="업무"
                 android:textColor="@color/main_color"
                 android:textSize="15sp" />
@@ -46,18 +46,20 @@
                 set_title="@{data.title}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_weight="2"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="10dp"
+                android:layout_weight="4"
                 android:text="업무내용"
                 android:textColor="@color/main_color"
                 android:textSize="15sp" />
 
             <TextView
-                set_team="@{data.team}"
+                set_team="@{data.content}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="10dp"
+                android:layout_weight="4"
                 android:text="부서"
                 android:textColor="@color/main_color"
                 android:textSize="15sp" />

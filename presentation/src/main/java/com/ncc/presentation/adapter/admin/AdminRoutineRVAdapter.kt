@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ncc.domain.model.DomainRoutine
 import com.ncc.presentation.R
 import com.ncc.presentation.adapter.routine.RoutineRVAdapter
+import com.ncc.presentation.databinding.AdminRoutineRvItemBinding
 import com.ncc.presentation.databinding.RoutineRvItemBinding
 import com.ncc.presentation.viewmodel.AdminViewModel
 
@@ -14,7 +15,7 @@ class AdminRoutineRVAdapter(
     private val viewModel: AdminViewModel
 ) : RecyclerView.Adapter<AdminRoutineRVAdapter.RoutineRVHolder>() {
 
-    inner class RoutineRVHolder(val binding: RoutineRvItemBinding) :
+    inner class RoutineRVHolder(val binding: AdminRoutineRvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: DomainRoutine) {
             binding.data = data
@@ -24,8 +25,8 @@ class AdminRoutineRVAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoutineRVHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = DataBindingUtil.inflate<RoutineRvItemBinding>(
-            layoutInflater, R.layout.routine_rv_item, parent, false
+        val binding = DataBindingUtil.inflate<AdminRoutineRvItemBinding>(
+            layoutInflater, R.layout.admin_routine_rv_item, parent, false
         )
         return RoutineRVHolder(binding)
     }

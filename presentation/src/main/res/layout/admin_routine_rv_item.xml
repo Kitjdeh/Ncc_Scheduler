@@ -6,11 +6,7 @@
 
         <variable
             name="data"
-            type="com.ncc.domain.model.DomainHandover" />
-
-        <variable
-            name="fragment"
-            type="com.ncc.presentation.view.main.handover.DetailHandoverFragment" />
+            type="com.ncc.domain.model.DomainRoutine" />
 
     </data>
 
@@ -19,11 +15,11 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/handover_rv"
+            android:id="@+id/routine_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/rv_item_frame"
             android:gravity="center"
             android:orientation="horizontal"
@@ -33,37 +29,41 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                set_time="@{data.time}"
+                set_process="@{data.team}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:gravity="left"
-                android:text="시간"
+                android:text="업무"
                 android:textColor="@color/main_color"
-                android:textSize="10sp" />
-
+                android:textSize="12sp" />
 
             <TextView
                 set_title="@{data.title}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="15dp"
-                android:layout_weight="6"
-                android:gravity="left"
+                android:layout_margin="10dp"
+                android:layout_weight="4"
                 android:text="업무내용"
                 android:textColor="@color/main_color"
                 android:textSize="15sp" />
 
             <TextView
-                set_process="@{data.routine}"
+                set_team="@{data.content}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_weight="3"
-                android:gravity="center"
+                android:layout_margin="10dp"
+                android:layout_weight="4"
                 android:text="부서"
+                android:textColor="@color/main_color"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="삭제"
                 android:textColor="@color/main_color"
                 android:textSize="15sp" />
         </LinearLayout>

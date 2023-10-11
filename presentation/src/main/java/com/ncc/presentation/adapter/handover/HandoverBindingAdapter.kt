@@ -8,10 +8,17 @@ object HandoverBindingAdapter {
     @JvmStatic
     @BindingAdapter("set_time")
     fun settime(text: TextView, time: String) {
-//        val endIndex = time.length
-//        val startIndex = endIndex - 8
-//        text.text = time.substring(startIndex,endIndex)
-        text.text = time
+        val endIndex = time.length
+        val startIndex = endIndex - 12
+        val minute = time.substring(endIndex - 2, endIndex)
+        val hour = time.substring(endIndex - 5, endIndex - 3)
+
+        val date = time.substring(startIndex, startIndex + 5)
+        val firstText = time.substring(startIndex, endIndex)
+        text.text = "${date} ${hour}:${minute}"
+//        val secondText  =
+//        text.text = time.substring(startIndex, endIndex)
+//        text.text = time
     }
 
     @JvmStatic

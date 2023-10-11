@@ -33,7 +33,8 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(R.layout.fragment_admin
     }
 
     private fun selectWork() {
-        val workList = Organization.work.toTypedArray()
+        val workList = listOf("전체 보기", "Daily", "Weekly", "Monthly")
+//        val workList = Organization.work.toTypedArray()
         val workSpinner = binding.selectWork
         var selectWork = "선택해주세요"
         val workSpinnerAdapter =
@@ -54,17 +55,18 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(R.layout.fragment_admin
                 id: Long
             ) {
                 selectWork = workList[position]
-
+                adminViewModel.filteringRoutineList(selectWork)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 selectWork = workList.first()
+                adminViewModel.filteringRoutineList(selectWork)
             }
         }
     }
 
     private fun selectShift() {
-        val shiftList = Organization.shift.toTypedArray()
+        val shiftList = listOf("전체 보기", "EVE", "NIG", "MOR")
         val shiftSpinner = binding.selectShift
         var selectShift = "선택해주세요"
         val shiftSpinnerAdapter =
@@ -85,12 +87,14 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(R.layout.fragment_admin
                 id: Long
             ) {
                 selectShift = shiftList[position]
+                adminViewModel.filteringShiftRoutineList(selectShift)
 //                mainViewModel.viewPosition(selectPosition)
 //                mainViewModel.getHandover(mainViewModel.selectedDate, selectPosition)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 selectShift = shiftList.first()
+                adminViewModel.filteringShiftRoutineList(selectShift)
             }
         }
     }

@@ -25,7 +25,6 @@ class ZoomImageActivity : AppCompatActivity() {
         val imageUriString = intent.getStringExtra("imageUri")
         val imageUri = Uri.parse(imageUriString)
 
-
         // ImageView에 이미지 표시
         val imageView = findViewById<ImageView>(R.id.image_full)
         Glide.with(this).load(imageUri).into(imageView)

@@ -116,11 +116,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun filterRoutine(date: String, dayOfMonth: String) {
+    fun filterRoutine(date: String, dayOfMonth: String, week: String) {
         routineList.clear()
         viewModelScope.launch {
-            var data = getRoutineUsecase.execute(userShift, date, dayOfMonth)
-            Log.d("루틴 데이터 확인", data.toString())
+            var data = getRoutineUsecase.execute(position, userShift, date, dayOfMonth, week)
+            Log.d("루틴 데이터 확인position${position}", data.toString())
             _getRoutineEvent.postValue(data)
 //            for (routine in data) {
 //                routineList.add(routine)

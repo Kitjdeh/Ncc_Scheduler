@@ -29,6 +29,8 @@ class ImageHandoverRVAdapter(
         fun bind(item: String) {
             Glide.with(binding.root).load(Uri.parse(item)).into(binding.imageArea)
             binding.imageArea.setOnClickListener {
+
+
                 var builder = AlertDialog.Builder(context)
                 // LayoutInflater 객체 가져오기
                 val layoutInflater = LayoutInflater.from(context)

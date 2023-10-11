@@ -21,14 +21,21 @@ class GetRoutineUsecase @Inject constructor(
     }
 
     //team, date 에 해당하는 업무 filtering 작업
-    suspend fun execute(team: String, date: String, dayOfWeek: String): List<DomainRoutine> {
+    suspend fun execute(
+        position: String,
+        team: String,
+        date: String,
+        dayOfWeek: String,
+        week: String
+    ): List<DomainRoutine> {
         return coroutineScope {
+            Log.d("포지션,팀필터 통과전", position)
             var isMatched = false
-            Log.d("도메인 routineList", totalRoutine.toString())
-            Log.d("조건${dayOfWeek} ", "${date.takeLast(2)} ${team}")
+//            Log.d("도메인 routineList", totalRoutine.toString())
+//            Log.d("조건${dayOfWeek} ", "${date.takeLast(2)} ${team}")
             val routineList = totalRoutine.filter {
-                if (it.team == team) {
-                    // monthly 필터 작업
+                if (it.team == team && it.position.contains(position)) {
+                    Log.d("포지션,팀필터 통과", position)
                     if (it.type == "Monthly") {
                         // 요일 단위 체크 일경우
                         isMatched = if (it.dayOfMonth.isNullOrEmpty()) {
@@ -43,7 +50,7 @@ class GetRoutineUsecase @Inject constructor(
                     //weekly 필터 작업
                     else if (it.type == "Weekly") {
                         isMatched =
-                            it.dayOfWeek!!.contains(dayOfWeek)
+                            it.dayOfWeek!!.contains(dayOfWeek) && it.week!!.contains(week)
                         isMatched
                     }
                     //daily 필터 작업

@@ -20,8 +20,8 @@
             android:id="@+id/selectWork"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:layout_marginEnd="29dp"
+            android:layout_margin="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/routine_rv"
             app:layout_constraintEnd_toStartOf="@+id/selectMonthType"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,7 @@
             android:id="@+id/selectMonthType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_margin="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,12 +41,65 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_margin="30dp"
+            android:layout_margin="15dp"
             android:layout_marginStart="28dp"
+            android:layout_marginBottom="23dp"
+            app:layout_constraintBottom_toTopOf="@+id/routine_rv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/selectMonthType"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:id="@+id/routine_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:background="@drawable/rv_item_frame"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/selectMonthType">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="업무"
+                android:textColor="@color/main_color"
+                android:textSize="12sp" />
+
+            <TextView
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="4"
+                android:text="업무내용"
+                android:textColor="@color/main_color"
+                android:textSize="15sp" />
+
+            <TextView
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="4"
+                android:text="부서"
+                android:textColor="@color/main_color"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="삭제"
+                android:textColor="@color/main_color"
+                android:textSize="15sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -57,6 +110,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selectMonthType">
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/admin_routine"

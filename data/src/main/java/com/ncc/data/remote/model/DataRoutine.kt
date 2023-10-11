@@ -5,9 +5,11 @@ import java.time.DayOfWeek
 
 data class DataRoutine(
     val name: String,
-    val id: String,
+    var id: String,
     val title: String,
+    val position: List<String>,
     val team: String,
+    val content: String,
     val date: String,
     val type: String,
     val month: List<String>?,
@@ -19,8 +21,9 @@ data class DataRoutine(
     constructor() : this(
         "오류",
         "",
-        "오류",
+        "오류", emptyList(),
         "0",
+        "오류",
         "오류",
         "오류",
         emptyList(),

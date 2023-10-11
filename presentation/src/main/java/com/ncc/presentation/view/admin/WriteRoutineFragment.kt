@@ -16,6 +16,7 @@ import com.ncc.presentation.databinding.FragmentWriteRoutineBinding
 import com.ncc.presentation.viewmodel.AdminViewModel
 import com.ncc.presentation.viewmodel.MainViewModel
 import com.ncc.presentation.widget.utils.Organization
+import com.ncc.presentation.widget.utils.ProcessList
 import java.time.LocalDate
 
 
@@ -27,14 +28,7 @@ class WriteRoutineFragment :
         selectWork()
         binding.settingRoutine.setOnClickListener {
             Log.d("뷰모델 type확인", adminViewModel.type)
-            if (adminViewModel.type == "Monthly") {
-                selectMonthFirst()
-            } else if (adminViewModel.type == "Weekly") {
-                selectWeekFirst()
-            } else if (adminViewModel.type == "Daily") {
-            } else {
-                shortShowToast("업무 타입 선택을 해주세요")
-            }
+            selectPosition()
         }
         initObserve()
         binding.setRoutineBtn.setOnClickListener {
@@ -47,11 +41,59 @@ class WriteRoutineFragment :
             Log.d("week값", adminViewModel.week.toString())
             adminViewModel.setRoutine(title, content)
             setRoutine()
+            binding.titleEdit.text.clear()
+            binding.contentEdit.text.clear()
         }
     }
 
     private fun setRoutine() {
 
+    }
+
+    private fun selectPosition() {
+        val items = Organization.position.toTypedArray()
+        val size = items.size
+        val selectedPosition = mutableListOf<String>()
+        val checkedItems = BooleanArray(size)
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Position 선택")
+        builder.setIcon(R.drawable.ncc_main_logo)
+
+        builder.setMultiChoiceItems(items, checkedItems) { dialog, which, isChecked ->
+            checkedItems[which] = isChecked
+            adminViewModel.selectPositionEvent(checkedItems)
+        }
+        builder.setPositiveButton("확인") { _, _ ->
+            // 체크된 아이템을 처리합니다.
+            for (i in items.indices) {
+                if (checkedItems[i]) {
+                    selectedPosition.add(items[i])
+                }
+            }
+            if (adminViewModel.type == "Monthly") {
+                selectMonthFirst()
+            } else if (adminViewModel.type == "Weekly") {
+                selectWeekFirst()
+            } else if (adminViewModel.type == "Daily") {
+            } else {
+                shortShowToast("업무 타입 선택을 해주세요")
+            }
+            adminViewModel.selectPosition(selectedPosition)
+            binding.position.text = selectedPosition.toString()
+        }
+        val dialog = builder.create()
+        var positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        dialog.setOnShowListener { dialogInterface ->
+            positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            positiveButton.isEnabled = false
+        }
+        adminViewModel.selectedPosition.observe(this) {
+            if (positiveButton != null) {
+                positiveButton.isEnabled = checkedItems.any { it }
+            }
+
+        }
+        dialog.show()
     }
 
 
@@ -80,9 +122,7 @@ class WriteRoutineFragment :
             binding.first.text = listMonth.toString()
         }
         adminViewModel.weekEvent.observe(this) { listWeek ->
-            Log.d("위크toList", listWeek.toList().toString())
             binding.secondLine.visibility = View.VISIBLE
-            Log.d("위크", listWeek.toString())
             binding.second.text = listWeek.toString()
         }
         adminViewModel.dayOfMonthEvent.observe(this) { dayOfMonth ->

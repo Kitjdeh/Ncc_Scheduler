@@ -19,7 +19,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/main_login_btn_frame"
             android:padding="10dp"
             tools:context=".view.main.handover.DetailHandoverFragment">
 
@@ -214,6 +213,7 @@
                             android:id="@+id/handoverCommentImageBtn"
                             android:layout_width="40dp"
                             android:layout_height="50dp"
+                            android:background="@drawable/main_team_btn_frame"
                             android:src="@drawable/icon_photo" />
 
 
@@ -224,7 +224,7 @@
                         android:layout_width="40dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/edit_btn_frame"
+                        android:background="@drawable/main_team_btn_frame"
                         android:gravity="center"
                         android:lineBreakStyle="normal"
                         android:text="등록"
