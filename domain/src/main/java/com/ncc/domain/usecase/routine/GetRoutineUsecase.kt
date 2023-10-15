@@ -20,6 +20,10 @@ class GetRoutineUsecase @Inject constructor(
         return totalRoutine
     }
 
+    suspend fun deleteRoutine() {
+
+    }
+
     //team, date 에 해당하는 업무 filtering 작업
     suspend fun execute(
         position: String,

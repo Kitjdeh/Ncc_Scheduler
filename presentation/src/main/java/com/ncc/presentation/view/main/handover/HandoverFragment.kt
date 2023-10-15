@@ -3,6 +3,9 @@ package com.ncc.presentation.view.main.handover
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Typeface
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -212,18 +215,16 @@ class HandoverFragment :
         mainViewModel.getComment(data)
         mainViewModel.getHandoverImage(data)
         var builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("인수인계 사항")
-        builder.setIcon(R.drawable.ncc_main_logo)
+//        builder.setTitle("인수인계 사항")
+//        builder.setIcon(R.drawable.ncc_main_logo)
         var layout = layoutInflater.inflate(R.layout.fragment_detail_handover, null)
         builder.setView(layout)
 
         val alertDialog = builder.create()
         alertDialog.window?.setBackgroundDrawableResource(R.drawable.dialog_round)
-
-
         imageAdatper = ImageHandoverRVAdapter(mainViewModel, requireContext())
         layout.findViewById<RecyclerView>(R.id.comment_Rv).adapter =
-            HandoverCommentRVAdapter(mainViewModel)
+            HandoverCommentRVAdapter(mainViewModel, requireContext())
         layout.findViewById<RecyclerView>(R.id.comment_Rv).showVertical(requireContext())
         layout.findViewById<RecyclerView>(R.id.handover_photo_recyclerview).adapter = imageAdatper
         layout.findViewById<RecyclerView>(R.id.handover_photo_recyclerview)
@@ -231,8 +232,16 @@ class HandoverFragment :
         layout.findViewById<TextView>(R.id.handoverUser).text = "${data.name}"
         layout.findViewById<TextView>(R.id.handoverTeam).text =
             data.position
-//            if (mainViewModel.selectedPosition == "manager") "교대대리" else mainViewModel.selectedPosition
         layout.findViewById<TextView>(R.id.handoverTime).text = data.time.substring(2)
+
+        //UserName bold 처리, content와 합쳐서 layout 사용
+//        val contentText = mainViewModel.user + " " + data.content
+//        val spannableString = SpannableString(contentText)
+//        val startIndex = contentText.indexOf(mainViewModel.user)
+//        val endIndex = startIndex + mainViewModel.user.length
+//        spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, 0)
+//        layout.findViewById<TextView>(R.id.handoverContent).text =
+//            spannableString
         layout.findViewById<TextView>(R.id.handoverContent).text = data.content
         layout.findViewById<TextView>(R.id.handoverRoutine).text = data.routine
         layout.findViewById<TextView>(R.id.handoverTitle).text = data.title

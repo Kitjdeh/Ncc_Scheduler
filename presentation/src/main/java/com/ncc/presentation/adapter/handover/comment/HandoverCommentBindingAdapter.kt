@@ -2,6 +2,7 @@ package com.ncc.presentation.adapter.handover.comment
 
 import android.net.Uri
 import android.util.Log
+import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,11 +32,15 @@ object HandoverCommentBindingAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("set_img")
+    @BindingAdapter("set_image")
     fun setImg(img: ImageView, imageSrc: List<String>) {
-        if (imageSrc.size != 0) {
-            Log.d("NCC set_img", imageSrc.toString())
+        if (imageSrc.isNotEmpty()) {
+
+//            Log.d("NCC set_img", imageSrc.toString())
             Glide.with(img).load(Uri.parse(imageSrc[0])).into(img)
+        } else {
+            img.visibility = View.INVISIBLE
         }
+
     }
 }

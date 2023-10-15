@@ -26,6 +26,9 @@ import com.ncc.presentation.view.splash.startActivityAndFinish
 import com.ncc.presentation.viewmodel.MainViewModel
 import com.ncc.presentation.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -45,6 +48,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         binding.settingBtn.setOnClickListener {
             this.startActivityAndFinish(this, SettingActivity::class.java)
         }
+
+    }
+
+    private suspend fun makeUserInfo() {
 
     }
 

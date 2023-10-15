@@ -61,6 +61,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(R.layout.activity_s
         mainViewModel.getUserInfo(useruid)
     }
 
+    override fun onBackPressed() {
+
+    }
+
     private fun observeViewModel() {
         mainViewModel.getTeamChangeEvent.observe(this) { team ->
             binding.selectTeamBtn.text = team

@@ -97,13 +97,13 @@ class DetailHandoverFragment(data: DomainHandover) :
         mainViewModel.getComment(data)
         mainViewModel.getHandoverImage(data)
         var builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("인수인계 사항")
-        builder.setIcon(R.drawable.ncc_main_logo)
+//        builder.setTitle("인수인계 사항")
+//        builder.setIcon(R.drawable.ncc_main_logo)
         var layout = layoutInflater.inflate(R.layout.fragment_detail_handover, null)
         builder.setView(layout)
         imageAdatper = ImageHandoverRVAdapter(mainViewModel, requireContext())
         layout.findViewById<RecyclerView>(R.id.comment_Rv).adapter =
-            HandoverCommentRVAdapter(mainViewModel)
+            HandoverCommentRVAdapter(mainViewModel,requireContext())
         layout.findViewById<RecyclerView>(R.id.comment_Rv).showVertical(requireContext())
         layout.findViewById<RecyclerView>(R.id.handover_photo_recyclerview).adapter = imageAdatper
         layout.findViewById<RecyclerView>(R.id.handover_photo_recyclerview)

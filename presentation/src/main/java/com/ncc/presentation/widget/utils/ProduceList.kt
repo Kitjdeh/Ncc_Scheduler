@@ -15,5 +15,6 @@ class ProcessList {
             "외곽",
             "기타"
         )
+
     }
 }

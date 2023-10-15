@@ -9,6 +9,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.ncc.domain.model.DomainComment
 import com.ncc.domain.model.DomainHandover
 import com.ncc.domain.model.DomainRoutine
@@ -27,14 +30,17 @@ import com.ncc.domain.utils.ScreenState
 import com.ncc.presentation.widget.utils.Organization
 import com.ncc.presentation.widget.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import javax.inject.Inject
+import kotlin.coroutines.suspendCoroutine
 
 
 @HiltViewModel
@@ -102,6 +108,9 @@ class MainViewModel @Inject constructor(
     var team = ""
     var position = ""
     var id = 0
+
+
+
     fun changeDate(date: String) {
         selectedDate = date
     }
