@@ -64,7 +64,7 @@ class HandoverFragment :
             Date(System.currentTimeMillis())
         )
 
-    fun clickWriteBtn() {
+    private fun clickWriteBtn() {
         mainViewModel.imageClear()
         var builder = AlertDialog.Builder(requireContext())
         builder.setTitle("인수인계 등록")
@@ -125,7 +125,8 @@ class HandoverFragment :
             val title = alert.findViewById<EditText>(R.id.title_edit).text.toString()
 //            val routine = alert.findViewById<EditText>(R.id.routine_edit).text.toString()
             val routine = selectedProcess
-            val content = alert.findViewById<EditText>(R.id.content_edit).text.toString()
+            var content = alert.findViewById<EditText>(R.id.content_edit).text.toString()
+            content = if (content.isNotBlank()) content else "내용 없음"
             val name = mainViewModel.user
             val date = mainViewModel.selectedDate
             val time = nowTime()
@@ -140,11 +141,11 @@ class HandoverFragment :
                 mainViewModel.imageList, mainViewModel.position
             )
         }
-        val cancelwrite = DialogInterface.OnClickListener { dialog, which ->
+        val cancelWrite = DialogInterface.OnClickListener { dialog, which ->
             mainViewModel.imageList.clear()
         }
         builder.setPositiveButton("확인", listener)
-        builder.setNegativeButton("취소", cancelwrite)
+        builder.setNegativeButton("취소", cancelWrite)
         builder.show()
     }
 

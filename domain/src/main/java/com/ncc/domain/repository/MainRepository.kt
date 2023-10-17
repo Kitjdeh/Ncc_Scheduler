@@ -12,8 +12,11 @@ interface MainRepository {
 
     //해당 날짜의 routine FireStore에서 호출
     suspend fun getRoutine(): List<DomainRoutine>
+    suspend fun deleteRoutine(uid: String): Boolean
 
-//    fun getRoutine(date: String): Task<QuerySnapshot>
+    suspend fun resetRoutine(): Boolean
+
+    //    fun getRoutine(date: String): Task<QuerySnapshot>
     //해당 날짜 routine 등록
     fun setRoutine(data: DomainRoutine): Task<Void>
 

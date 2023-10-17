@@ -42,6 +42,4 @@ class SplashRepositoryImpl @Inject constructor(
 
         return splashLocalDataSource.logout()
     }
-
-
 }

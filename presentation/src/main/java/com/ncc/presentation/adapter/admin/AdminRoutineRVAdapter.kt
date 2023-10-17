@@ -1,5 +1,6 @@
 package com.ncc.presentation.adapter.admin
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,6 +11,9 @@ import com.ncc.presentation.adapter.routine.RoutineRVAdapter
 import com.ncc.presentation.databinding.AdminRoutineRvItemBinding
 import com.ncc.presentation.databinding.RoutineRvItemBinding
 import com.ncc.presentation.viewmodel.AdminViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AdminRoutineRVAdapter(
     private val viewModel: AdminViewModel
@@ -20,6 +24,12 @@ class AdminRoutineRVAdapter(
         fun bind(data: DomainRoutine) {
             binding.data = data
             binding.executePendingBindings()
+            binding.delteBtn.setOnClickListener {
+                CoroutineScope(Dispatchers.IO).launch {
+                    viewModel.deleteRoutine(data.id)
+                }
+
+            }
         }
     }
 

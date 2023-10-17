@@ -5,15 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.firestore.Query
-import com.ncc.data.remote.model.DataRoutine
 import com.ncc.domain.model.DomainRoutine
 import com.ncc.domain.usecase.routine.GetRoutineUsecase
 import com.ncc.domain.usecase.routine.SetRoutineUsecase
-import com.prolificinteractive.materialcalendarview.CalendarDay
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.internal.filterList
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -80,6 +77,8 @@ class AdminViewModel @Inject constructor(
     var dayOfMonth: List<String>? = null
     var dayOfWeek: List<String>? = null
 
+    var selectedShift = "전체 보기"
+    var selectedType = "전체 보기"
     var listRoutine: List<DomainRoutine>? = null
     val monthCheckedItems = BooleanArray(13)
     fun clear() {
@@ -89,6 +88,16 @@ class AdminViewModel @Inject constructor(
         viewModelScope.launch {
             val data = getRoutineUsecase.getRoutine()
             _getRoutineEvent.setValue(data)
+        }
+    }
+
+    suspend fun deleteRoutine(uid: String): Boolean {
+        return withContext(viewModelScope.coroutineContext) {
+            getRoutineList()
+            val result = getRoutineUsecase.deleteRoutine(uid)
+            getRoutineUsecase.resetRoutine()
+            getRoutineList()
+            result
         }
     }
 
@@ -150,14 +159,66 @@ class AdminViewModel @Inject constructor(
         dayOfWeek = data
     }
 
-    fun filteringRoutineList(data: String) {
-//        val routineList =  getRoutineUsecase.getRoutine()
-//        Log.d("데이터1${data}", routineList.toString())
+    fun filteringTypeRoutineList(type: String) {
+        viewModelScope.launch {
+//            var routineList = getRoutineUsecase.getRoutine()
+////            var routineList = _getRoutineEvent.value
+//            suspendCoroutine<List<DomainRoutine>> { continuation ->
+//                if (data != "전체 보기") {
+//                    routineList = routineList!!.filter { routine -> routine.type == data }
+//                }
+//                continuation.resume(routineList!!)
+//                _getRoutineEvent.postValue(routineList!!)
+            selectedType = type
+            filteringRoutine(selectedShift, selectedType)
+        }
+
+    }
+
+    fun filteringShiftRoutineList(shift: String) {
+        viewModelScope.launch {
+            selectedShift = shift
+            filteringRoutine(selectedShift, selectedType)
+        }
+    }
+//    fun filteringShiftRoutineList(data: String) {
+//        viewModelScope.launch {
+////            var routineList = _getRoutineEvent.value
+//            var routineList = getRoutineUsecase.getRoutine()
+//            Log.d("데이터1${data}", routineList.toString())
+//            suspendCoroutine<List<DomainRoutine>> { continuation ->
+//                if (data != "전체 보기") {
+//                    Log.d("데이터4${data}", routineList.toString())
+//                    routineList = routineList!!.filter { routine -> routine.team == data }
+//                }
+//                continuation.resume(routineList!!)
+//                Log.d("데이터2${data}", routineList.toString())
+//                _getRoutineEvent.postValue(routineList!!)
+//            }
+//            Log.d("데이터3${data}", routineList.toString())
+//        }
+//    }
+
+    private fun filteringRoutine(shift: String, work: String) {
+        selectedShift = shift
+        selectedType = work
         viewModelScope.launch {
             var routineList = getRoutineUsecase.getRoutine()
             suspendCoroutine<List<DomainRoutine>> { continuation ->
-                if (data != "전체 보기") {
-                    routineList = routineList.filter { routine -> routine.type == data }
+                if (shift != "전체 보기" && work != "전체 보기") {
+                    routineList =
+                        routineList.filter { routine -> routine.type == work && routine.team == shift }
+//                    Log.d("둘다 전체보기", routineList.toString())
+                } else if (shift == "전체 보기" && work != "전체 보기") {
+                    routineList =
+                        routineList.filter { routine -> routine.type == work }
+//                    Log.d("shift만 전체보기", routineList.toString())
+                } else if (shift != "전체 보기" && work == "전체 보기") {
+                    routineList =
+                        routineList.filter { routine -> routine.team == shift }
+//                    Log.d("work만 전체보기", routineList.toString())
+                } else {
+//                    Log.d("둘다 전체보기", routineList.toString())
                 }
                 continuation.resume(routineList)
                 _getRoutineEvent.postValue(routineList!!)
@@ -165,22 +226,7 @@ class AdminViewModel @Inject constructor(
         }
     }
 
-    fun filteringShiftRoutineList(data: String) {
-        viewModelScope.launch {
-            var routineList = getRoutineUsecase.getRoutine()
-            Log.d("데이터1${data}", routineList.toString())
-            suspendCoroutine<List<DomainRoutine>> { continuation ->
-                if (data != "전체 보기") {
-                    Log.d("데이터4${data}", routineList.toString())
-                    routineList = routineList.filter { routine -> routine.team == data }
-                }
-                continuation.resume(routineList)
-                Log.d("데이터2${data}", routineList.toString())
-                _getRoutineEvent.postValue(routineList!!)
-            }
-            Log.d("데이터3${data}", routineList.toString())
-        }
-    }
+
 //    suspendCoroutine<List<DataRoutine>> { continuation ->
 //        if (routineList != null) {
 //            Log.d("파베 요청 없음", routineList.toString())

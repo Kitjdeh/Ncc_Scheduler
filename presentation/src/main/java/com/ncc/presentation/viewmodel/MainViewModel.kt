@@ -129,7 +129,6 @@ class MainViewModel @Inject constructor(
         routineList.clear()
         viewModelScope.launch {
             var data = getRoutineUsecase.execute(position, userShift, date, dayOfMonth, week)
-            Log.d("루틴 데이터 확인position${position}", data.toString())
             _getRoutineEvent.postValue(data)
 //            for (routine in data) {
 //                routineList.add(routine)
@@ -139,7 +138,6 @@ class MainViewModel @Inject constructor(
 
     fun updateUserInfo() {
         val data = DomainUser(id, user, team, position, userUid)
-        Log.d("유저정보 갱신 데이터", data.toString())
         updateUserInfoUsecase.execute(data).addOnSuccessListener {
             _updateCallEvent.postValue(ScreenState.LOADING)
         }.addOnFailureListener { _updateCallEvent.postValue(ScreenState.ERROR) }
@@ -173,7 +171,6 @@ class MainViewModel @Inject constructor(
                 selectedPosition = data!!.position
                 id = data!!.id
                 userUid = data!!.uid
-                Log.d("겟유저인포 작동", _getUserInfoEvent.value.toString())
 
                 _getUserInfoEvent.postValue(data!!)
                 _checkUserInfoEvent.postValue(data!!)
@@ -215,7 +212,7 @@ class MainViewModel @Inject constructor(
                                 handoverList.add(it)
                             }
                         }
-                        Log.d("전체 요청 생성3", "${handoverList.toString()} ${team}")
+
                     } catch (e: Exception) {
                         // 에러 처리
                     }
@@ -223,7 +220,7 @@ class MainViewModel @Inject constructor(
                 withContext(Dispatchers.Main) {
                     // LiveData 값을 업데이트
                     _getHandovereEvent.postValue(handoverList)
-                    Log.d("핸드오버 요정_getHandovereEvent", getHandovereEvent.value.toString())
+
                 }
             }
 
@@ -237,7 +234,7 @@ class MainViewModel @Inject constructor(
                             handoverList.add(it!!)
                         }
                     }
-//                    Log.d("전체 요청 생성3", handoverList.toString())
+
                     _getHandovereEvent.call()
                 }
 
@@ -311,7 +308,7 @@ class MainViewModel @Inject constructor(
         imageUri: List<String>?,
         position: String
     ) {
-        Log.d("인수인계 시작", "${position},${id}")
+
         setHandoverUsecase.execute(
             DomainHandover(
                 name, id, routine, title, date, time, content, imageUri, comment = null, position
@@ -332,20 +329,6 @@ class MainViewModel @Inject constructor(
         setCommentUsecase.execute(
             DomainComment(name, handoverid, id, content, ImageSrc, date, time), position
         ).addOnSuccessListener { snapshot ->
-            Log.d(
-                "NCC댓글 viewmodel",
-                "${
-                    DomainComment(
-                        name,
-                        handoverid,
-                        id,
-                        content,
-                        ImageSrc,
-                        date,
-                        time
-                    ).toString()
-                }${position}"
-            )
             commentImageList.clear()
         }
 

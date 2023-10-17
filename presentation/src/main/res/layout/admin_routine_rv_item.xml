@@ -48,7 +48,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                set_team="@{data.content}"
+                set_position="@{data.position}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -58,6 +58,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/delteBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

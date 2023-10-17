@@ -33,8 +33,9 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -64,7 +65,7 @@
                     android:text="팀"
                     android:textColor="@color/black"
 
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -148,8 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/handover_photo"
-                tools:layout_editor_absoluteX="30dp">
+                app:layout_constraintTop_toBottomOf="@+id/handover_photo">
 
 
                 <ScrollView
@@ -182,9 +182,9 @@
                         android:id="@+id/handoverUser"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginHorizontal="10dp"
                         android:gravity="center"
-                        android:layout_gravity="center"
                         android:text="장현수"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -219,8 +219,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <EditText
@@ -245,8 +245,8 @@
                             android:id="@+id/handoverCommentImageBtn"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:scaleType="fitXY"
                             android:background="@drawable/detail_handover_comment_frame"
+                            android:scaleType="fitXY"
                             android:src="@drawable/icon_photo" />
                     </LinearLayout>
 
@@ -259,9 +259,9 @@
                         android:gravity="center"
                         android:lineBreakStyle="normal"
                         android:text="등록"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black" />
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </LinearLayout>

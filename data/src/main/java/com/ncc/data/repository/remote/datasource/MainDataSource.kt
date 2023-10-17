@@ -16,6 +16,10 @@ interface MainDataSource {
     //해당 날짜 routine 등록
     fun setRoutine(data: DataRoutine): Task<Void>
 
+    suspend fun resetRoutine(): Boolean
+
+    suspend fun deleteRoutine(uid: String): Boolean
+
     //해당 날짜 인수인계 가져오기
     fun getHandover(date: String, team: String): Task<QuerySnapshot>
 
@@ -26,7 +30,7 @@ interface MainDataSource {
     fun setComments(comment: DataComment, team: String): Task<Void>
 
     //유저 정보 호출
-    fun getUserInfo(uid: String) : Task<DocumentSnapshot>
+    fun getUserInfo(uid: String): Task<DocumentSnapshot>
 
     //유저 정보 수정
     fun updateUserInfo(data: DataUser): Task<Void>

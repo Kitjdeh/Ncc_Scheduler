@@ -23,6 +23,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(R.layout.fragment_admin
         selectWork()
         observe()
         adminViewModel.getRoutineList()
+
     }
 
     private fun observe() {
@@ -36,7 +37,8 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(R.layout.fragment_admin
         val workList = listOf("전체 보기", "Daily", "Weekly", "Monthly")
 //        val workList = Organization.work.toTypedArray()
         val workSpinner = binding.selectWork
-        var selectWork = "선택해주세요"
+        val shift = adminViewModel.selectedShift
+        var selectedType = "선택해주세요"
         val workSpinnerAdapter =
             ArrayAdapter<String>(
                 requireContext(),
@@ -54,13 +56,15 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(R.layout.fragment_admin
                 position: Int,
                 id: Long
             ) {
-                selectWork = workList[position]
-                adminViewModel.filteringRoutineList(selectWork)
+                selectedType = workList[position]
+                adminViewModel.filteringTypeRoutineList(selectedType)
+//                adminViewModel.filteringRoutine(shift, selectedType)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                selectWork = workList.first()
-                adminViewModel.filteringRoutineList(selectWork)
+                selectedType = workList.first()
+                adminViewModel.filteringTypeRoutineList(selectedType)
+//                adminViewModel.filteringRoutine(shift, selectedType)
             }
         }
     }
@@ -69,6 +73,7 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(R.layout.fragment_admin
         val shiftList = listOf("전체 보기", "EVE", "NIG", "MOR")
         val shiftSpinner = binding.selectShift
         var selectShift = "선택해주세요"
+        val type = adminViewModel.selectedType
         val shiftSpinnerAdapter =
             ArrayAdapter<String>(
                 requireContext(),
@@ -88,12 +93,13 @@ class AdminFragment : BaseFragment<FragmentAdminBinding>(R.layout.fragment_admin
             ) {
                 selectShift = shiftList[position]
                 adminViewModel.filteringShiftRoutineList(selectShift)
-//                mainViewModel.viewPosition(selectPosition)
-//                mainViewModel.getHandover(mainViewModel.selectedDate, selectPosition)
+//                adminViewModel.filteringRoutine(selectShift, type)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 selectShift = shiftList.first()
+//                adminViewModel.filteringRoutine(selectShift, type)
+
                 adminViewModel.filteringShiftRoutineList(selectShift)
             }
         }

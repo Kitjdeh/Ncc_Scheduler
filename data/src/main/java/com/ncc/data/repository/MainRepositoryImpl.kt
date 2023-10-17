@@ -5,7 +5,6 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.ncc.data.mapper.MainMapper
-import com.ncc.data.remote.model.DataRoutine
 import com.ncc.data.repository.remote.datasource.MainDataSource
 import com.ncc.domain.model.DomainComment
 import com.ncc.domain.model.DomainHandover
@@ -35,6 +34,14 @@ class MainRepositoryImpl @Inject constructor(
 //        return result
 //    }
     //해당 날짜 인수인계 가져오기
+    override suspend fun deleteRoutine(uid: String): Boolean {
+        return mainDataSource.deleteRoutine(uid)
+    }
+
+    override suspend fun resetRoutine(): Boolean {
+        return mainDataSource.resetRoutine()
+    }
+
     override fun getHandover(date: String, team: String): Task<QuerySnapshot> {
         return mainDataSource.getHandover(date, team)
     }

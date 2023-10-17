@@ -31,7 +31,6 @@ class MainDataSourceImpl @Inject constructor(
     override suspend fun getRoutine() =
         suspendCoroutine<List<DataRoutine>> { continuation ->
             if (routineList != null) {
-                Log.d("파베 요청 없음", routineList.toString())
                 continuation.resume(routineList!!)
             } else {
                 val routineCollectionRef =
@@ -46,6 +45,53 @@ class MainDataSourceImpl @Inject constructor(
                         }
             }
         }
+
+    override suspend fun resetRoutine(): Boolean {
+        routineList = null
+        return true
+    }
+
+    override suspend fun deleteRoutine(uid: String) =
+        suspendCoroutine<Boolean> { continuation ->
+            val routineCollectionRef =
+                firestore.collection("routine").document(uid).delete().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        continuation.resume(true)
+                    } else {
+                        continuation.resume(false)
+                    }
+                }
+        }
+
+
+    override fun setRoutine(data: DataRoutine): Task<Void> {
+        val routineCollectionRef = firestore.collection("routine")
+        val newDocumentRef = routineCollectionRef.document()
+        data.id = newDocumentRef.id
+        return newDocumentRef.set(data)
+            .addOnSuccessListener { documentReference ->
+                routineList = null
+            }
+            .addOnFailureListener { e ->
+                // 문서 추가가 실패한 경우 실행되는 코드
+                Log.w("Firestore", "Error adding document", e)
+            }
+    }
+
+//    override fun setRoutine(data: DataRoutine): Task<Void> {
+//        val routineCollectionRef = firestore.collection("routine")
+//        val newDocumentRef = routineCollectionRef.document()
+//        data.id = newDocumentRef.id
+//        return newDocumentRef.set(data)
+//            .addOnSuccessListener { documentReference ->
+//                routineList = null
+//            }
+//            .addOnFailureListener { e ->
+//                // 문서 추가가 실패한 경우 실행되는 코드
+//                Log.w("Firestore", "Error adding document", e)
+//            }
+//    }
+
 
     //    override suspend fun getRoutine(date: String) =
 //        suspendCoroutine<List<DataRoutine>> { continuation ->
@@ -89,19 +135,7 @@ class MainDataSourceImpl @Inject constructor(
         return userInfoCollectionRef.update(updateData)
     }
 
-    override fun setRoutine(data: DataRoutine): Task<Void> {
-        val routineCollectionRef = firestore.collection("routine")
-        val newDocumentRef = routineCollectionRef.document()
-        data.id = newDocumentRef.id
-        return newDocumentRef.set(data)
-            .addOnSuccessListener { documentReference ->
-                routineList = null
-            }
-            .addOnFailureListener { e ->
-                // 문서 추가가 실패한 경우 실행되는 코드
-                Log.w("Firestore", "Error adding document", e)
-            }
-    }
+
 //        val routineDocRef = firestore.collection("routine").document(data.date)
 //        val routineCollectionRef = routineDocRef.collection("routine")
 //
